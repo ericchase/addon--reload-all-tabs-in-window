@@ -5,11 +5,8 @@
   "description": "Reload all tabs in current window.",
   "developer": {
     "name": "ericchase",
-    "url": "https://github.com/ericchase"
+    "url": "https://github.com/ericchase/reload-all-tabs-in-window"
   },
-  "homepage_url": "https://github.com/ericchase/reload-all-tabs-in-window",
-  "default_locale": "en",
-  "incognito": "split",
   "icons": {
     "48": "icons/reload-48.png",
     "96": "icons/reload-96.png"
@@ -28,7 +25,7 @@
     ]
   },
   "options_ui": {
-    "browser_style": "true",
+    "browser_style": true,
     "page": "options/options.html"
   }
 }
