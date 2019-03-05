@@ -1,8 +1,15 @@
 {
   "manifest_version": 2,
   "name": "Reload All Tabs in Window",
-  "version": "1.0",
+  "version": "0.1",
   "description": "Reload all tabs in current window.",
+  "developer": {
+    "name": "ericchase",
+    "url": "https://github.com/ericchase"
+  },
+  "homepage_url": "https://github.com/ericchase/reload-all-tabs-in-window",
+  "default_locale": "en",
+  "incognito": "split",
   "icons": {
     "48": "icons/reload-48.png",
     "96": "icons/reload-96.png"
@@ -12,12 +19,16 @@
     "tabs"
   ],
   "browser_action": {
-    "default_icon": "icons/reload-32.png",
+    "default_icon": "icons/reload-16.png",
     "default_title": "Reload all tabs in this window."
   },
   "background": {
     "scripts": [
       "reloadtabs.js"
     ]
+  },
+  "options_ui": {
+    "browser_style": "true",
+    "page": "options/options.html"
   }
 }
