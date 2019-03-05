@@ -8,3 +8,7 @@ I wanted a very simple addon that works for the current window only.
 
 ## Contribution
 Feel free to fork this project or suggest enhancements.
+
+Improved icons would be greatly appreciated!
+
+Don't worry about giving credit, nothing in this project is licensed.
