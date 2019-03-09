@@ -1,6 +1,8 @@
 # Reload All Tabs in Window
 A Firefox addon for reloading all tabs in the current window.
 
+Get the addon here: https://addons.mozilla.org/en-US/firefox/addon/reload-all-tabs-in-window/
+
 ## Motive
 ~I have been unable to find an addon similar to the [Reload All Tabs](https://chrome.google.com/webstore/detail/reload-all-tabs/lgpdljdpanfecnpindkbnikegohoobci?hl=en) Chrome extension.~
 
