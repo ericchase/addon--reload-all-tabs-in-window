@@ -1,4 +1,6 @@
-// Background Script: 'reloadtabs.js'
+'use strict'
+
+console.log('browser-action.js')
 
 // browser.browser​Action
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/browserAction
@@ -54,12 +56,13 @@ browser.browserAction.onClicked.addListener(
       .query({ windowId: tab.windowId })
       .then(handle_browser_action)
       .catch(err => {
-        console.log('[Reload All Tabs in Window] error:', err)
+        console.log('[browser-action-tabs.query] error:', err)
       })
   },
 )
 
 function handle_browser_action(tab_list) {
+  console.log('[browser-action.icon] info: clicked');
   // filter any disabled tabs
   reload_each_tab_in_list(tab_list)
 }

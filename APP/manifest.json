@@ -13,6 +13,7 @@
   },
   "permissions": [
     "activeTab",
+    "menus",
     "tabs"
   ],
   "browser_action": {
@@ -21,7 +22,9 @@
   },
   "background": {
     "scripts": [
-      "reloadtabs.js"
+      "js/browser-action.js",
+      "js/context-menu.js",
+      "js/disabled-tabs.js"
     ]
   },
   "options_ui": {
