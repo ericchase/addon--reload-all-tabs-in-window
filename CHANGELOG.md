@@ -1,6 +1,6 @@
 ## v0.2
 
-Added sidebar page for marking tabs to skip during refresh.
+Added sidebar action for marking tabs to skip during refresh.
 
 ## v0.1
 
