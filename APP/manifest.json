@@ -1,32 +1,43 @@
 {
   "manifest_version": 2,
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{f316fd83-cc84-40a1-9fe0-86516e21e8b4}"
+    }
+  },
   "name": "Reload All Tabs in Window",
-  "version": "0.1",
+  "version": "0.2",
   "description": "Reload all tabs in current window.",
   "developer": {
     "name": "ericchase",
     "url": "https://github.com/ericchase/reload-all-tabs-in-window"
   },
   "icons": {
-    "48": "icons/logo-48.png",
-    "96": "icons/logo-96.png"
+    "48": "images/logo-48.png",
+    "96": "images/logo-96.png"
   },
   "permissions": [
     "activeTab",
     "menus",
+    "sessions",
     "tabs"
   ],
   "browser_action": {
-    "default_icon": "icons/browser-action-16.png",
+    "default_icon": "images/browser-action-16.png",
     "default_title": "Reload all tabs in this window."
-  },
-  "page_action": {
-    "default_icon": "icons/page-action-19.png"
   },
   "background": {
     "scripts": [
-      "js/browser-action.js"
+      "js/browser-action.js",
+      "js/context-menu.js"
     ]
+  },
+  "sidebar_action": {
+    "browser_style": true,
+    "default_icon": "images/browser-action-16.png",
+    "default_title": "Skip Tabs",
+    "default_panel": "sidebar/disable-tabs.html",
+    "open_at_install": false
   },
   "options_ui": {
     "browser_style": true,

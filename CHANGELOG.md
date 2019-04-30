@@ -1,5 +1,7 @@
 ## v0.2
-Added page action to disable reloading of specific tabs.
+
+Added sidebar page for marking tabs to skip during refresh.
 
 ## v0.1
+
 Simple browser action with icon.
