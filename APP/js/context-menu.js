@@ -1,6 +1,6 @@
 'use strict'
 
-console.log('context-menu.js')
+console.log('loaded: context-menu.js')
 
 // browser.menus
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus
@@ -24,34 +24,65 @@ console.log('context-menu.js')
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus/create
 // Creates a new menu item, given an options object defining properties for the item.
 //
+// createProperties: object -> Properties for the new menu item.
+// {
+//   contexts: array -> Array of contexts in which this menu item will appear
+//   https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus/ContextType
 //
-// menus.ContextType
-// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus/ContextType
-// The different contexts a menu item can appear in.
+//   id: string -> The unique ID to assign to this item. Mandatory for event pages.
+//                 Cannot be the same as another ID for this extension.
 //
+//   title: string -> The text to be displayed in the item. Mandatory unless type is "separator".
+// }
 browser.menus.create(
   {
-    id: 'skip-tab',
-    title: 'Toggle tab skipping.',
+    id: 'tab-skip-page',
+    title: '"Skip Tabs" Sidebar',
     contexts: ['browser_action'],
   },
   on_create,
 )
 
-browser.menus.onClicked.addListener((info, tab) => {
-  if (info.menuItemId == 'skip-tab') {
-    console.log('Item ' + info.menuItemId + ' clicked ' + 'in tab ' + tab.id)
-  }
-})
-
+// browser.runtime
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/runtime
+// This module provides information about your extension and the environment it's running in.
+//
+// It also provides messaging APIs enabling you to:
+// - Communicate between different parts of your extension.
+// - Communicate with other extensions.
+// - Communicate with native applications.
+//
+// runtime.lastError
+// This value is set when an asynchronous function has an error condition that it needs to report
+// to its caller. If lastError has not been set, the value is null.
+//
 function on_create() {
   if (browser.runtime.lastError != null) {
-    console.log('[context-menu.on_create] error:', browser.runtime.lastError)
-  } else {
-    console.log('[context-menu.on_create] success')
+    console.log('[context-menu@on_create] error:', browser.runtime.lastError)
   }
 }
 
-function skip_current_tab() {
-  console.log('this does nothing, yet')
-}
+// menus.onClicked
+// https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus/onClicked
+// Fired when a menu item is clicked.
+//
+// callback: function -> Function that will be called when this event occurs.
+// (
+//   info: menus.OnClickData -> Information about the item clicked and the context where the
+//                              click happened.
+//
+//   tab: tabs.Tab -> The details of the tab where the click took place. If the click did not
+//                    take place in or on a tab, this parameter will be missing.
+// )
+browser.menus.onClicked.addListener((info, _) => {
+  if (info.menuItemId == 'tab-skip-page') {
+    //
+    // browser.sidebarAction
+    // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/sidebarAction
+    // Gets and sets properties of an extension's sidebar.
+    //
+    // sidebarAction.open()
+    // Opens the sidebar.
+    browser.sidebarAction.open()
+  }
+})
