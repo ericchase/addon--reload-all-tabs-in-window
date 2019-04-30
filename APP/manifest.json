@@ -8,8 +8,8 @@
     "url": "https://github.com/ericchase/reload-all-tabs-in-window"
   },
   "icons": {
-    "48": "icons/reload-48.png",
-    "96": "icons/reload-96.png"
+    "48": "icons/logo-48.png",
+    "96": "icons/logo-96.png"
   },
   "permissions": [
     "activeTab",
@@ -17,14 +17,15 @@
     "tabs"
   ],
   "browser_action": {
-    "default_icon": "icons/reload-16.png",
+    "default_icon": "icons/browser-action-16.png",
     "default_title": "Reload all tabs in this window."
+  },
+  "page_action": {
+    "default_icon": "icons/page-action-19.png"
   },
   "background": {
     "scripts": [
-      "js/browser-action.js",
-      "js/context-menu.js",
-      "js/disabled-tabs.js"
+      "js/browser-action.js"
     ]
   },
   "options_ui": {
