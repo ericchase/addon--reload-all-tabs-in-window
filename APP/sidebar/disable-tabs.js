@@ -98,7 +98,7 @@ function new_list_item() {
   // Element.innerHTML
   // Is a DOMString representing the markup of the element's content.
   //
-  item.innerHTML = `<div class='checkbox'></div><div class='favicon'></div><div class='title'></div>`
+  item.innerHTML = `<div class='checkbox'></div><div class='favicon'><img src='' /></div><div class='title'></div>`
 
   return item
 }
@@ -122,7 +122,13 @@ function update_list_item(item, tab) {
   //
   item.childNodes[0].onclick = handle_checkbox_onclick
   if (background_script.is_ignored(tab.id)) item.childNodes[0].classList.add('checked')
-  if (tab.favIconUrl !== undefined) item.childNodes[1].innerHTML = `<img src='${tab.favIconUrl}'/>`
+  if (tab.favIconUrl === undefined) {
+    item.childNodes[1].childNodes[0].style = 'display: none'
+    item.childNodes[1].childNodes[0].src = ''
+  } else {
+    item.childNodes[1].childNodes[0].style = ''
+    item.childNodes[1].childNodes[0].src = tab.favIconUrl
+  }
   //
   // Node.textContent
   // Returns / Sets the textual content of an element and all its descendants.
