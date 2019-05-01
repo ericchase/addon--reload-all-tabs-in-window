@@ -14,7 +14,7 @@ let background_script = null
 //
 browser.runtime.getBackgroundPage().then(background => {
   background_script = background
-  populate_list()
+  apply_to_tablist(fill_content)
 })
 
 // browser.windows
@@ -37,15 +37,15 @@ browser.runtime.getBackgroundPage().then(background => {
 //                        only contain the url, title and favIconUrl properties if the extension's
 //                        manifest file includes the "tabs" permission.
 // }
-function populate_list() {
+function apply_to_tablist(func) {
   browser.windows
     .getCurrent({ populate: true })
-    .then(fill_content)
-    .catch(err => console.log('[disable-tabs.initialize] error:', err))
+    .then(func)
+    .catch(err => console.log('[disable-tabs.apply_tablist] error:', err))
 }
 
 // a reference to the base element where all the tab items will be displayed
-let gridbox = document.querySelector('.gridbox')
+let gridbox = document.querySelector('#gridbox')
 
 // window: windows.Window -> Information about a browser window.
 function fill_content(window) {
@@ -103,9 +103,12 @@ function new_list_item() {
   return item
 }
 
+let checkbox_list = []
+
 // list: node -> The DOM node representing the list of tab items.
 // tabs: array -> The array of Tab containing information of the tabs of the window.
 function update_list(list, tabs) {
+  checkbox_list = []
   for (let i = 0; i < list.length; i++) {
     update_list_item(list[i], tabs[i])
   }
@@ -119,9 +122,16 @@ function update_list_item(item, tab) {
   // Element.click
   // The onclick property of the GlobalEventHandlers mixin is the EventHandler for processing
   // click events on a given element.
+  item.onclick = handle_item_onclick
+  // set up clicks for checkboxes
+  checkbox_list.push(item.childNodes[0])
+  item.childNodes[0].onclick = handle_checkbox_onclick // checkbox
+  //item.childNodes[1].onclick = handle_item_onclick
+  //item.childNodes[1].childNodes[0].onclick = handle_item_onclick
+  //item.childNodes[2].onclick = handle_item_onclick
   //
-  item.childNodes[0].onclick = handle_checkbox_onclick
   if (background_script.is_ignored(tab.id)) item.childNodes[0].classList.add('checked')
+  //
   if (tab.favIconUrl === undefined) {
     item.childNodes[1].childNodes[0].style = 'display: none'
     item.childNodes[1].childNodes[0].src = ''
@@ -136,9 +146,15 @@ function update_list_item(item, tab) {
   item.childNodes[2].textContent = tab.title
 }
 
+function handle_item_onclick(event) {
+  event.stopPropagation()
+  browser.tabs.update(parseInt(event.currentTarget.id, 10), { active: true })
+}
+
 // The parseInt() function parses a string argument and returns an integer of the specified
 // radix (the base in mathematical numeral systems).
 function handle_checkbox_onclick(event) {
+  event.stopPropagation()
   toggle_checkbox(event.target.classList, parseInt(event.target.parentNode.id, 10))
 }
 
@@ -148,6 +164,21 @@ function toggle_checkbox(classList, tabId) {
   } else {
     background_script.ignore_list_remove(tabId)
   }
+}
+
+// click events for the buttons that apply options to all tab items at once
+document.querySelector('#reset').onclick = function(event) {
+  checkbox_list.forEach(checkbox => {
+    checkbox.classList.remove('checked')
+    background_script.ignore_list_remove(parseInt(checkbox.parentNode.id, 10))
+  })
+}
+
+document.querySelector('#skip-all').onclick = function(event) {
+  checkbox_list.forEach(checkbox => {
+    checkbox.classList.add('checked')
+    background_script.ignore_list_add(parseInt(checkbox.parentNode.id, 10))
+  })
 }
 
 // Tab Events
