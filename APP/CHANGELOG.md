@@ -12,4 +12,3 @@ Added context menu to easily access sidebar.
 ## v0.1
 
 Simple browser action with icon.
-1
