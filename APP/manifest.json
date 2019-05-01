@@ -6,11 +6,11 @@
     }
   },
   "name": "Reload All Tabs in Window",
-  "version": "0.2",
+  "version": "0.3",
   "description": "Reload all tabs in current window.",
   "developer": {
     "name": "ericchase",
-    "url": "https://github.com/ericchase/reload-all-tabs-in-window"
+    "url": "https://addons.mozilla.org/en-US/firefox/addon/reload-all-tabs-in-window/"
   },
   "icons": {
     "48": "images/logo-48.png",
@@ -23,7 +23,10 @@
     "tabs"
   ],
   "browser_action": {
-    "default_icon": "images/browser-action-16.png",
+    "default_icon": {
+      "16": "images/browser-action-16.png",
+      "32": "images/logo-48.png"
+    },
     "default_title": "Reload all tabs in this window."
   },
   "background": {
@@ -34,7 +37,7 @@
   },
   "sidebar_action": {
     "browser_style": true,
-    "default_icon": "images/browser-action-16.png",
+    "default_icon": "images/logo-48.png",
     "default_title": "Skip Tabs",
     "default_panel": "sidebar/disable-tabs.html",
     "open_at_install": false

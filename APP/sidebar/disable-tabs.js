@@ -14,7 +14,7 @@ let background_script = null
 //
 browser.runtime.getBackgroundPage().then(background => {
   background_script = background
-  apply_to_tablist(fill_content)
+  populate_list()
 })
 
 // browser.windows
@@ -37,10 +37,10 @@ browser.runtime.getBackgroundPage().then(background => {
 //                        only contain the url, title and favIconUrl properties if the extension's
 //                        manifest file includes the "tabs" permission.
 // }
-function apply_to_tablist(func) {
+function populate_list() {
   browser.windows
     .getCurrent({ populate: true })
-    .then(func)
+    .then(fill_content)
     .catch(err => console.log('[disable-tabs.apply_tablist] error:', err))
 }
 
