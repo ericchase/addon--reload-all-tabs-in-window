@@ -1,10 +1,4 @@
 {
-  "manifest_version": 2,
-  "browser_specific_settings": {
-    "gecko": {
-      "id": "{f316fd83-cc84-40a1-9fe0-86516e21e8b4}"
-    }
-  },
   "name": "Reload All Tabs in Window",
   "version": "0.3",
   "description": "Reload all tabs in current window.",
@@ -16,21 +10,12 @@
     "48": "images/logo-48.png",
     "96": "images/logo-96.png"
   },
-  "permissions": [
-    "activeTab",
-    "menus",
-    "sessions",
-    "tabs"
-  ],
   "browser_action": {
-    "default_icon": "images/browser-action-16.png",
+    "default_icon": {
+      "16": "images/browser-action-16.png",
+      "32": "images/browser-action-32.png"
+    },
     "default_title": "Reload all tabs in this window."
-  },
-  "background": {
-    "scripts": [
-      "js/browser-action.js",
-      "js/context-menu.js"
-    ]
   },
   "sidebar_action": {
     "browser_style": true,
@@ -42,5 +27,23 @@
   "options_ui": {
     "browser_style": true,
     "page": "options/options.html"
-  }
+  },
+  "background": {
+    "scripts": [
+      "js/browser-action.js",
+      "js/context-menu.js"
+    ]
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{f316fd83-cc84-40a1-9fe0-86516e21e8b4}"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "menus",
+    "sessions",
+    "tabs"
+  ],
+  "manifest_version": 2
 }
