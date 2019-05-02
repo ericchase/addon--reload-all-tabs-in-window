@@ -98,7 +98,7 @@ function new_list_item() {
   // Element.innerHTML
   // Is a DOMString representing the markup of the element's content.
   //
-  item.innerHTML = `<div class='checkbox'></div><div class='favicon'><img src='' alt='favicon'/></div><div class='title'></div>`
+  item.innerHTML = `<div class='checkbox'></div><div class='favicon'><img src='' alt=''/></div><div class='title'></div>`
   
   return item
 }

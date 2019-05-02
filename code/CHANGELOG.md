@@ -1,3 +1,8 @@
+## v0.3b
+
+Updated icons and options page.  
+Minor fixes across the extension.
+
 ## v0.3
 
 Added instructions to sidebar action.  
