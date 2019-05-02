@@ -1,4 +1,4 @@
-## v0.3b
+## v0.3.1
 
 Updated icons and options page.  
 Minor fixes across the extension.
