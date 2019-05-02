@@ -4,7 +4,7 @@
   "description": "Reload all tabs in current window.",
   "developer": {
     "name": "ericchase",
-    "url": ""
+    "url": "https://addons.mozilla.org/en-US/firefox/addon/reload-all-tabs-in-window/"
   },
   "icons": {
     "48": "images/logo-48.png",
