@@ -1,102 +1,106 @@
 * {
-  color: #555;
+    color: #555;
 }
 
 #instructions {
-  background-color: #f5f5f5;
-  border-bottom: solid #aaa 1px;
-  font-size: 1.1em;
-  padding: 5px 5px 15px 5px;
+    background-color: #f5f5f5;
+    border-bottom: solid #aaa 1px;
+    font-size: 1.1em;
+    padding: 5px 5px 15px 5px;
 }
 
 #button-bar {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  height: 40px;
-  padding-top: 5px;
-  padding-bottom: 5px;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    height: 40px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 #button-bar .button {
-  border-radius: 7px;
-  background-color: #f5f5f5;
-  font-size: 1.1em;
-  line-height: 28px;
-  text-align: center;
-  height: 30px;
-  width: 70px;
+    border-radius: 7px;
+    background-color: #f5f5f5;
+    font-size: 1.1em;
+    line-height: 28px;
+    text-align: center;
+    height: 30px;
+    width: 70px;
 }
+
 #button-bar .button:hover {
-  background-color: #f0f0f0;
-  cursor: pointer;
+    background-color: #f0f0f0;
+    cursor: pointer;
 }
+
 #button-bar .button:active {
-  background-color: #e5e5e5;
+    background-color: #e5e5e5;
 }
 
 #gridbox {
-  display: grid;
+    display: grid;
 }
 
 #gridbox .flexbox {
-  background-color: #fff;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  white-space: nowrap;
-  height: 30px;
-  margin-bottom: 2px;
+    background-color: #fff;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    white-space: nowrap;
+    height: 30px;
+    margin-bottom: 2px;
 }
 
-/* Highlight individiual parts when hovering. */
+/* Highlight individual parts when hovering. */
 #gridbox .flexbox:hover {
-  background-color: #f5f5f5;
-  cursor: pointer;
+    background-color: #f5f5f5;
+    cursor: pointer;
 }
+
 #gridbox .checkbox:hover {
-  animation-duration: 2s;
-  animation-name: checkbox-hover;
-  animation-iteration-count: infinite;
+    animation-duration: 2s;
+    animation-name: checkbox-hover;
+    animation-iteration-count: infinite;
 }
 
 @keyframes checkbox-hover {
-  0% {
-    background-color: #f5f5f5;
-  }
-  5% {
-    background-color: #f5f5f5;
-  }
-  45% {
-    background-color: #e5e5e5;
-  }
-  55% {
-    background-color: #e5e5e5;
-  }
-  95% {
-    background-color: #f5f5f5;
-  }
-  100% {
-    background-color: #f5f5f5;
-  }
+    0% {
+        background-color: #f5f5f5;
+    }
+    5% {
+        background-color: #f5f5f5;
+    }
+    45% {
+        background-color: #e5e5e5;
+    }
+    55% {
+        background-color: #e5e5e5;
+    }
+    95% {
+        background-color: #f5f5f5;
+    }
+    100% {
+        background-color: #f5f5f5;
+    }
 }
 
 /* Change list item icon on click. */
 .checkbox {
-  background-image: url('/images/sidebar-action-30.png');
+    background-image: url('/images/sidebar-action-30.png');
 }
+
 .checkbox.checked {
-  background-image: url('/images/sidebar-action-30-skip.png');
+    background-image: url('/images/sidebar-action-30-skip.png');
 }
 
 img,
 .checkbox,
 .favicon {
-  height: 30px;
-  width: 30px;
+    height: 30px;
+    width: 30px;
 }
 
 .title {
-  align-self: center;
-  padding: 5px;
+    align-self: center;
+    padding: 5px;
 }

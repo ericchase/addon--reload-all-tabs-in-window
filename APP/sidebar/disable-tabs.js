@@ -1,6 +1,6 @@
 'use strict'
 
-console.log('loaded: disabled-tabs.js')
+console.log( 'loaded: disabled-tabs.js' )
 
 // a reference to the background scripts' context for the extension
 let background_script = null
@@ -12,10 +12,10 @@ let background_script = null
 // runtime.getBackgroundPage()
 // Retrieves the Window object for the background page running inside the current extension.
 //
-browser.runtime.getBackgroundPage().then(background => {
+browser.runtime.getBackgroundPage().then( background => {
   background_script = background
   populate_list()
-})
+} )
 
 // browser.windows
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/windows
@@ -39,28 +39,28 @@ browser.runtime.getBackgroundPage().then(background => {
 // }
 function populate_list() {
   browser.windows
-    .getCurrent({ populate: true })
-    .then(fill_content)
-    .catch(err => console.log('[disable-tabs.apply_tablist] error:', err))
+    .getCurrent( {populate: true} )
+    .then( fill_content )
+    .catch( err => console.log( '[disable-tabs.apply_tablist] error:', err ) )
 }
 
 // a reference to the base element where all the tab items will be displayed
-let gridbox = document.querySelector('#gridbox')
+let gridbox = document.querySelector( '#gridbox' )
 
 // window: windows.Window -> Information about a browser window.
-function fill_content(window) {
-  normalize_item_count(window.tabs)
+function fill_content( window ) {
+  normalize_item_count( window.tabs )
   //
   // childNodes
   // https://developer.mozilla.org/en-US/docs/Web/API/Node/childNodes
   // The Node.childNodes read-only property returns a live NodeList of child nodes of the given
   // element where the first child node is assigned index 0.
   //
-  update_list(gridbox.childNodes, window.tabs)
+  update_list( gridbox.childNodes, window.tabs )
 }
 
 // tabs: array -> Array of tabs.Tab objects representing the current tabs in the window.
-function normalize_item_count(tabs) {
+function normalize_item_count( tabs ) {
   //
   // Node.appendChild()
   // Adds the specified childNode argument as the last child to the current node. If the
@@ -71,10 +71,10 @@ function normalize_item_count(tabs) {
   // Removes a child node from the current element, which must be a child of the current node.
   //
   while (gridbox.childNodes.length < tabs.length) {
-    gridbox.appendChild(new_list_item())
+    gridbox.appendChild( new_list_item() )
   }
   while (gridbox.childNodes.length > tabs.length) {
-    gridbox.removeChild(gridbox.childNodes[gridbox.childNodes.length - 1])
+    gridbox.removeChild( gridbox.childNodes[gridbox.childNodes.length - 1] )
   }
 }
 
@@ -82,8 +82,8 @@ function new_list_item() {
   //
   // Document​.create​Element()
   // creates the HTML element specified by tagName
-  let item = document.createElement('div')
-
+  let item = document.createElement( 'div' )
+  
   //
   // Element.classList
   // Returns a DOMTokenList containing the list of class attributes.
@@ -92,14 +92,14 @@ function new_list_item() {
   // Adds the specified class values. If these classes already exist in the element's class
   // attribute they are ignored.
   //
-  item.classList.add('flexbox')
-
+  item.classList.add( 'flexbox' )
+  
   //
   // Element.innerHTML
   // Is a DOMString representing the markup of the element's content.
   //
-  item.innerHTML = `<div class='checkbox'></div><div class='favicon'><img src='' /></div><div class='title'></div>`
-
+  item.innerHTML = `<div class='checkbox'></div><div class='favicon'><img src='' alt='favicon'/></div><div class='title'></div>`
+  
   return item
 }
 
@@ -107,16 +107,16 @@ let checkbox_list = []
 
 // list: node -> The DOM node representing the list of tab items.
 // tabs: array -> The array of Tab containing information of the tabs of the window.
-function update_list(list, tabs) {
+function update_list( list, tabs ) {
   checkbox_list = []
   for (let i = 0; i < list.length; i++) {
-    update_list_item(list[i], tabs[i])
+    update_list_item( list[i], tabs[i] )
   }
 }
 
-// item: Node -> The DOM node representing an individaul tab item.
+// item: Node -> The DOM node representing an individual tab item.
 // tab: Tab -> Information of a Tab of the window.
-function update_list_item(item, tab) {
+function update_list_item( item, tab ) {
   item.id = tab.id
   //
   // Element.click
@@ -124,13 +124,13 @@ function update_list_item(item, tab) {
   // click events on a given element.
   item.onclick = handle_item_onclick
   // set up clicks for checkboxes
-  checkbox_list.push(item.childNodes[0])
+  checkbox_list.push( item.childNodes[0] )
   item.childNodes[0].onclick = handle_checkbox_onclick // checkbox
   //item.childNodes[1].onclick = handle_item_onclick
   //item.childNodes[1].childNodes[0].onclick = handle_item_onclick
   //item.childNodes[2].onclick = handle_item_onclick
   //
-  if (background_script.is_ignored(tab.id)) item.childNodes[0].classList.add('checked')
+  if (background_script.is_ignored( tab.id )) item.childNodes[0].classList.add( 'checked' )
   //
   if (tab.favIconUrl === undefined) {
     item.childNodes[1].childNodes[0].style = 'display: none'
@@ -146,52 +146,52 @@ function update_list_item(item, tab) {
   item.childNodes[2].textContent = tab.title
 }
 
-function handle_item_onclick(event) {
+function handle_item_onclick( event ) {
   event.stopPropagation()
-  browser.tabs.update(parseInt(event.currentTarget.id, 10), { active: true })
+  browser.tabs.update( parseInt( event.currentTarget.id, 10 ), {active: true} )
 }
 
 // The parseInt() function parses a string argument and returns an integer of the specified
 // radix (the base in mathematical numeral systems).
-function handle_checkbox_onclick(event) {
+function handle_checkbox_onclick( event ) {
   event.stopPropagation()
-  toggle_checkbox(event.target.classList, parseInt(event.target.parentNode.id, 10))
+  toggle_checkbox( event.target.classList, parseInt( event.target.parentNode.id, 10 ) )
 }
 
-function toggle_checkbox(classList, tabId) {
-  if (classList.toggle('checked')) {
-    background_script.ignore_list_add(tabId)
+function toggle_checkbox( classList, tabId ) {
+  if (classList.toggle( 'checked' )) {
+    background_script.ignore_list_add( tabId )
   } else {
-    background_script.ignore_list_remove(tabId)
+    background_script.ignore_list_remove( tabId )
   }
 }
 
 // click events for the buttons that apply options to all tab items at once
-document.querySelector('#reset').onclick = function(event) {
-  checkbox_list.forEach(checkbox => {
-    checkbox.classList.remove('checked')
-    background_script.ignore_list_remove(parseInt(checkbox.parentNode.id, 10))
-  })
+document.querySelector( '#reset' ).onclick = function () {
+  checkbox_list.forEach( checkbox => {
+    checkbox.classList.remove( 'checked' )
+    background_script.ignore_list_remove( parseInt( checkbox.parentNode.id, 10 ) )
+  } )
 }
 
-document.querySelector('#skip-all').onclick = function(event) {
-  checkbox_list.forEach(checkbox => {
-    checkbox.classList.add('checked')
-    background_script.ignore_list_add(parseInt(checkbox.parentNode.id, 10))
-  })
+document.querySelector( '#skip-all' ).onclick = function () {
+  checkbox_list.forEach( checkbox => {
+    checkbox.classList.add( 'checked' )
+    background_script.ignore_list_add( parseInt( checkbox.parentNode.id, 10 ) )
+  } )
 }
 
 // Tab Events
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/tabs#Events
 // Refresh the sidebar when tabs change within the window.
-browser.tabs.onAttached.addListener(refresh_sidebar)
-browser.tabs.onDetached.addListener(refresh_sidebar)
-browser.tabs.onCreated.addListener(refresh_sidebar)
-browser.tabs.onRemoved.addListener(refresh_sidebar)
-browser.tabs.onReplaced.addListener(refresh_sidebar)
-browser.tabs.onMoved.addListener(refresh_sidebar)
-browser.tabs.onUpdated.addListener(refresh_sidebar)
+browser.tabs.onAttached.addListener( refresh_sidebar )
+browser.tabs.onDetached.addListener( refresh_sidebar )
+browser.tabs.onCreated.addListener( refresh_sidebar )
+browser.tabs.onRemoved.addListener( refresh_sidebar )
+browser.tabs.onReplaced.addListener( refresh_sidebar )
+browser.tabs.onMoved.addListener( refresh_sidebar )
+browser.tabs.onUpdated.addListener( refresh_sidebar )
 
-function refresh_sidebar(_) {
+function refresh_sidebar() {
   populate_list()
 }
