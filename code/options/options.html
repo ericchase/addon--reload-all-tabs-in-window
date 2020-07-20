@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 
 <html lang="en">
 <head>
@@ -8,6 +8,12 @@
 </head>
 
 <body>
+  <div class="container" id="options">
+    <h1>Options</h1>
+    <input id="bypass-cache-by-default" type="checkbox"> <label for="bypass-cache-by-default">Bypass the cache when reloading by default.</label><br>
+  </div>
+  <script type="text/javascript" src="options.js"></script>
+
   <div class="container">
     <h1>Links</h1>
     <a href="https://github.com/ericchase/reload-all-tabs-in-window">Project Source Code</a><br>
@@ -15,6 +21,10 @@
   </div>
   <div class="container">
     <h1>Changelog</h1>
+    <h2>v0.4</h2>
+    Added capability to bypass the cache when reloading by shift-clicking the extension icon.<br>
+    Added "Bypass the cache when reloading by default." option to ignore the browser's cache when reloading pages. Set to false by default.<br>
+    <br>
     <h2>v0.3.1</h2>
     Updated icons and options page.<br>
     Minor fixes across the extension.<br>

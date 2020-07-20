@@ -1,6 +1,6 @@
 {
   "name": "Reload All Tabs in Window",
-  "version": "0.3.2",
+  "version": "0.4",
   "description": "Reload all tabs in current window.",
   "developer": {
     "name": "ericchase",
@@ -43,6 +43,7 @@
     "activeTab",
     "menus",
     "sessions",
+    "storage",
     "tabs"
   ],
   "manifest_version": 2

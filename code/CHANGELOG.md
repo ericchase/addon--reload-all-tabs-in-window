@@ -1,3 +1,8 @@
+## v0.4
+
+Added the capability to bypass the browser cache when reloading by shift-clicking the extension icon.  
+Added "Bypass the cache when reloading by default." option to ignore the browser's cache when reloading pages by default. Set to false by default.
+
 ## v0.3.1
 
 Updated icons and options page.  
