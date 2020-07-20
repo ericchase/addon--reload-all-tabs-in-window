@@ -1,6 +1,6 @@
 'use strict'
 
-console.log( 'loaded: context-menu.js' )
+console.log('loaded: context-menu.js')
 
 // browser.menus
 // https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/menus
@@ -38,9 +38,9 @@ browser.menus.create(
   {
     id: 'tab-skip-page',
     title: '"Skip Tabs" Sidebar',
-    contexts: ['browser_action'],
+    contexts: ['browser_action']
   },
-  on_create,
+  on_create
 )
 
 // browser.runtime
@@ -56,9 +56,9 @@ browser.menus.create(
 // This value is set when an asynchronous function has an error condition that it needs to report
 // to its caller. If lastError has not been set, the value is null.
 //
-function on_create() {
+function on_create () {
   if (browser.runtime.lastError != null) {
-    console.log( '[context-menu@on_create] error:', browser.runtime.lastError )
+    console.log('[context-menu@on_create] error:', browser.runtime.lastError)
   }
 }
 
@@ -74,7 +74,7 @@ function on_create() {
 //   tab: tabs.Tab -> The details of the tab where the click took place. If the click did not
 //                    take place in or on a tab, this parameter will be missing.
 // )
-browser.menus.onClicked.addListener( info => {
+browser.menus.onClicked.addListener(info => {
   if (info.menuItemId === 'tab-skip-page') {
     //
     // browser.sidebarAction
@@ -85,4 +85,4 @@ browser.menus.onClicked.addListener( info => {
     // Opens the sidebar.
     browser.sidebarAction.open()
   }
-} )
+})
