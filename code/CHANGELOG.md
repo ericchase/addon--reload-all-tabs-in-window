@@ -1,7 +1,11 @@
+## v0.5
+
+Added an 'Extension Shortcut' for reloading tabs. No default. (Access extension shortcuts by opening about:addons, clicking the cogwheel, and then the 'Manage Extension Shortcuts' button.)
+
 ## v0.4
 
 Added the capability to bypass the browser cache when reloading by shift-clicking the extension icon.  
-Added "Bypass the cache when reloading by default." option to ignore the browser's cache when reloading pages by default. Set to false by default.
+Added 'Bypass the cache when reloading by default.' option to ignore the browser's cache when reloading pages by default. Set to false by default.
 
 ## v0.3.1
 
