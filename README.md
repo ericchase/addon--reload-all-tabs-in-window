@@ -12,6 +12,8 @@ Limitations:
 
 - unknown
 
+Please send feedback, feature requests, and ideas to the GitHub page (https://github.com/ericchase/addon--reload-all-tabs-in-window/issues).
+
 This is a Manifest V3 extension (https://developer.chrome.com/docs/extensions/develop/migrate).
 
 ### Chrome
