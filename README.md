@@ -1,9 +1,27 @@
-A browser addon for reloading all tabs in the current window.
+## Browser Addon
+
+_Reload all open tabs in current window._
+
+Reloads the tabs in the window where the extension icon is clicked.
+
+Features:
+
+- none
+
+Limitations:
+
+- unknown
+
+This is a Manifest V3 extension (https://developer.chrome.com/docs/extensions/develop/migrate).
 
 ### Chrome
 
+https://chromewebstore.google.com/detail/...
+
 ### Firefox
 
-## Notes
+https://addons.mozilla.org/en-US/firefox/addon/...
+
+## Developer Notes
 
 The `bun` runtime seems to have some issues with an Archiver dependency (readable-stream?). Because of that, I opt to continue using `node` for running the `build` and `bundle` scripts.
