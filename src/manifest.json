@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "description": "Reload all open tabs in current window.",
   "author": "ericchase",
+  "permissions": ["contextMenus"],
   "action": {},
   "icons": {
     "16": "icons/icon-16.png",
