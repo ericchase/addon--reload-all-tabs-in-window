@@ -1,15 +1,14 @@
 {
   "scripts": {
-    "build": "node ./addon-build-scripts/build.mjs",
-    "bundle": "node ./addon-build-scripts/bundle.mjs",
-    "dev": "node ./addon-build-scripts/watch.mjs",
+    "build": "bun ./addon-build-scripts/build.mjs",
+    "bundle": "bun ./addon-build-scripts/bundle.mjs",
+    "dev": "bun ./addon-build-scripts/dev.mjs",
     "format-debug": "prettier . --debug-check",
     "format": "prettier . --write"
   },
   "dependencies": {
     "@types/chrome": "^0.0.268",
-    "@types/node": "^20.12.11",
-    "archiver": "^7.0.1",
-    "prettier": "^3.2.5"
+    "@types/node": "^20.14.2",
+    "prettier": "^3.3.1"
   }
 }
