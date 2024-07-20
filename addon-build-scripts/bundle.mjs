@@ -9,7 +9,6 @@ const buildConfig = await readConfig('./build-config.json');
 const bundleConfig = await readConfig('./bundle-config.json');
 const coreManifest = await readConfig('./src/manifest.json');
 
-// await incrementVersionPatch();
 coreManifest.set('version', await getSemanticVersion());
 
 for (const browser of /**@type{string[]}*/ (buildConfig.get('browsers'))) {

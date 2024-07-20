@@ -1,3 +1,5 @@
+const reloadingSet = new Set();
+
 // chrome.action.onClicked
 // https://developer.chrome.com/docs/extensions/reference/api/action
 // Use the chrome.action API to control the extension's icon in the Google
@@ -11,46 +13,79 @@ chrome.action.onClicked.addListener(async (currentTab) => {
   // https://developer.chrome.com/docs/extensions/reference/api/tabs#method-query
   // Gets all tabs that have the specified properties, or all tabs if no
   // properties are specified.
-  try {
-    for (const tab of await chrome.tabs.query({ windowId: currentTab.windowId })) {
-      reloadTab(tab);
-    }
-  } catch (err) {
-    console.log('[chrome.action.onClicked] error:', err);
+  reloadAllTabs(currentTab);
+});
+
+chrome.contextMenus.create(
+  {
+    contexts: ['action'],
+    id: 'action--open-store-page-chrome',
+    title: 'Open Chrome Web Store Page',
+  },
+  () => {
+    chrome.runtime.lastError; // ignore the errors
+  },
+);
+chrome.contextMenus.create(
+  {
+    contexts: ['action'],
+    id: 'action--open-store-page-firefox',
+    title: 'Open Firefox Browser Add-ons Page',
+  },
+  () => {
+    chrome.runtime.lastError; // ignore the errors
+  },
+);
+
+(async () => {
+  const { show_page_context_menu_item } = await loadOptions();
+  if (show_page_context_menu_item) {
+    chrome.contextMenus.create(
+      {
+        contexts: ['page'],
+        id: 'page--reload-all-tabs-in-window',
+        title: 'Reload All Tabs (in Window)',
+      },
+      () => {
+        chrome.runtime.lastError; // ignore the errors
+      },
+    );
   }
-});
+})();
 
-// chrome.contextMenus.create({
-//   contexts: ['action'],
-//   id: 'open-store-page',
-//   title: 'Open Store Page',
-// });
-chrome.contextMenus.create({
-  contexts: ['action'],
-  id: 'open-store-page-chrome',
-  // parentId: 'open-store-page',
-  title: 'Open Chrome Web Store Page',
-});
-chrome.contextMenus.create({
-  contexts: ['action'],
-  id: 'open-store-page-firefox',
-  // parentId: 'open-store-page',
-  title: 'Open Firefox Browser Add-ons Page',
-});
-
-chrome.contextMenus.onClicked.addListener((info) => {
+chrome.contextMenus.onClicked.addListener((info, currentTab) => {
   switch (info.menuItemId) {
-    case 'open-store-page-chrome':
+    case 'action--open-store-page-chrome':
       chrome.tabs.create({ url: 'https://chromewebstore.google.com/detail/reload-all-tabs-in-window/fobjljihdlfbamijbmadjkkehmlleaoa' });
       break;
-    case 'open-store-page-firefox':
+    case 'action--open-store-page-firefox':
       chrome.tabs.create({ url: 'https://addons.mozilla.org/en-US/firefox/addon/reloadalltabs-inwindow/' });
+      break;
+    case 'page--reload-all-tabs-in-window':
+      if (currentTab) reloadAllTabs(currentTab);
       break;
   }
 });
 
+/** @param {chrome.tabs.Tab} currentTab */
+async function reloadAllTabs(currentTab) {
+  try {
+    if (!reloadingSet.has(currentTab.windowId)) {
+      reloadingSet.add(currentTab.windowId);
+      const { delay } = await loadOptions();
+      for (const tab of await chrome.tabs.query({ windowId: currentTab.windowId })) {
+        await reloadTab(tab);
+        await sleep(delay);
+      }
+      reloadingSet.delete(currentTab.windowId);
+    }
+  } catch (err) {
+    console.log('[reloadAllTabs] error:', err);
+  }
+}
+
 /** @param {chrome.tabs.Tab} tab */
-function reloadTab(tab) {
+async function reloadTab(tab) {
   try {
     if (tab.id !== undefined) {
       chrome.tabs.reload(tab.id);
@@ -58,4 +93,39 @@ function reloadTab(tab) {
   } catch (err) {
     console.log('[reloadTab] error:', err);
   }
+}
+
+/**
+ * @returns {Promise<{ delay: string, show_page_context_menu_item: boolean }>}
+ */
+function loadOptions() {
+  return new Promise((resolve) => {
+    chrome.storage.local.get(
+      {
+        delay: 0, //
+        show_page_context_menu_item: true,
+      },
+      (items) => {
+        resolve({
+          delay: items.delay, //
+          show_page_context_menu_item: items.show_page_context_menu_item,
+        });
+      },
+    );
+  });
+}
+
+/**
+ * @param {string} delay - ms
+ * @returns {Promise<void>}
+ */
+async function sleep(delay) {
+  let ms = Number.parseInt(delay);
+  if (ms !== ms) ms = 0;
+
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, ms);
+  });
 }
