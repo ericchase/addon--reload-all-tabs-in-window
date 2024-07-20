@@ -26,4 +26,6 @@ https://addons.mozilla.org/en-US/firefox/addon/...
 
 ## Developer Notes
 
-The `bun` runtime seems to have some issues with an Archiver dependency (readable-stream?). Because of that, I opt to continue using `node` for running the `build` and `bundle` scripts.
+~~The `bun` runtime seems to have some issues with an Archiver dependency (readable-stream?). Because of that, I opt to continue using `node` for running the `build` and `bundle` scripts.~~
+
+I took some inspiration from another dev and switched over to using the 7-Zip software instead of the Archiver package.
