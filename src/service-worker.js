@@ -106,7 +106,6 @@ async function reloadTab(tab) {
  * @returns {Promise<void>}
  */
 async function sleep(delay) {
-  console.log('sleep delay:', delay);
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve();

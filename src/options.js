@@ -45,7 +45,6 @@ async function init() {
 
   const advancedOptionsContainer = document.createElement('div');
   function updateAdvancedOptionsContainer() {
-    console.log('options.use_advanced_options:', options.use_advanced_options);
     if (options.use_advanced_options === true) {
       advancedOptionsContainer.style.removeProperty('display');
     } else {
