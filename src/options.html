@@ -4,14 +4,20 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reload All Tabs (in Window) Options</title>
-    <script src="./options.js" defer></script>
+    <script src="./options.js" type="module"></script>
     <style>
       body {
         font-family: 'Segoe UI', Tahoma, sans-serif;
         font-size: 1rem;
       }
-      .option-delay {
-        width: 48px;
+      .option {
+        border-left: 0.125em solid black;
+        padding-left: 0.5em;
+      }
+      .option-number {
+        margin-inline: 0.125em;
+        text-align: end;
+        width: 4ch;
       }
     </style>
   </head>

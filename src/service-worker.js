@@ -1,3 +1,5 @@
+import { loadOptions, options } from './options.lib.js';
+
 const reloadingSet = new Set();
 
 // chrome.action.onClicked
@@ -38,8 +40,8 @@ chrome.contextMenus.create(
 );
 
 (async () => {
-  const { show_page_context_menu_item } = await loadOptions();
-  if (show_page_context_menu_item) {
+  await loadOptions();
+  if (options.show_page_context_menu_item) {
     chrome.contextMenus.create(
       {
         contexts: ['page'],
@@ -70,12 +72,16 @@ chrome.contextMenus.onClicked.addListener((info, currentTab) => {
 /** @param {chrome.tabs.Tab} currentTab */
 async function reloadAllTabs(currentTab) {
   try {
+    await loadOptions();
     if (!reloadingSet.has(currentTab.windowId)) {
       reloadingSet.add(currentTab.windowId);
-      const { delay } = await loadOptions();
       for (const tab of await chrome.tabs.query({ windowId: currentTab.windowId })) {
         await reloadTab(tab);
-        await sleep(delay);
+        if (options.use_advanced_options === true) {
+          await sleep(pickBetween(options.advanced_delay_range_start, options.advanced_delay_range_end));
+        } else {
+          await sleep(options.delay);
+        }
       }
       reloadingSet.delete(currentTab.windowId);
     }
@@ -96,36 +102,22 @@ async function reloadTab(tab) {
 }
 
 /**
- * @returns {Promise<{ delay: string, show_page_context_menu_item: boolean }>}
+ * @param {number} delay - ms
+ * @returns {Promise<void>}
  */
-function loadOptions() {
+async function sleep(delay) {
+  console.log('sleep delay:', delay);
   return new Promise((resolve) => {
-    chrome.storage.local.get(
-      {
-        delay: 0, //
-        show_page_context_menu_item: true,
-      },
-      (items) => {
-        resolve({
-          delay: items.delay, //
-          show_page_context_menu_item: items.show_page_context_menu_item,
-        });
-      },
-    );
+    setTimeout(() => {
+      resolve();
+    }, delay);
   });
 }
 
 /**
- * @param {string} delay - ms
- * @returns {Promise<void>}
+ * @param {number} min
+ * @param {number} max
  */
-async function sleep(delay) {
-  let ms = Number.parseInt(delay);
-  if (ms !== ms) ms = 0;
-
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve();
-    }, ms);
-  });
+function pickBetween(min, max) {
+  return min + Math.random() * max;
 }

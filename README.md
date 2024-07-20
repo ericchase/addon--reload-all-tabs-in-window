@@ -6,7 +6,11 @@ Reloads the tabs in the window where the extension icon is clicked.
 
 Features:
 
-- none
+- Options:
+  - delay between each tab reload (default: 0)
+  - show item in page right-click context menu (default: true)
+- Advanced Options:
+  - delay between each tab reload chosen random from user defined range
 
 Limitations:
 
@@ -18,11 +22,11 @@ This is a Manifest V3 extension (https://developer.chrome.com/docs/extensions/de
 
 ### Chrome
 
-https://chromewebstore.google.com/detail/...
+https://chromewebstore.google.com/detail/reload-all-tabs-in-window/fobjljihdlfbamijbmadjkkehmlleaoa
 
 ### Firefox
 
-https://addons.mozilla.org/en-US/firefox/addon/...
+https://addons.mozilla.org/en-US/firefox/addon/reloadalltabs-inwindow/
 
 ## Developer Notes
 

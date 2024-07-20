@@ -17,6 +17,7 @@
       "icons/icon-light-128.png",
       "options.html",
       "options.js",
+      "options.lib.js",
       "service-worker.js"
     ]
   }
