@@ -4,17 +4,18 @@ _Reload all open tabs in current window._
 
 Reloads the tabs in the window where the extension icon is clicked.
 
-Features:
+Options:
 
-- Options:
-  - delay between each tab reload (default: 0)
-  - show item in page right-click context menu (default: true)
-- Advanced Options:
-  - delay between each tab reload chosen random from user defined range
+- Add delay between each tab reload (default: 0)
+- Show menu item in pages' right-click context menu (default: true)
+
+Advanced Options:
+
+- Add delay between each tab reload, chosen randomly from user defined range
 
 Limitations:
 
-- unknown
+- Unknown
 
 Please send feedback, feature requests, and ideas to the GitHub page (https://github.com/ericchase/addon--reload-all-tabs-in-window/issues).
 
