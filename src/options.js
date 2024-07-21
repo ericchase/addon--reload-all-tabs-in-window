@@ -22,7 +22,7 @@ async function init() {
   // Show Page Context Menu Option
   const show_page_context_menu_item_input = newCheckboxOptionInput(options.show_page_context_menu_item);
   document.body.append(
-    document.createElement('br'),
+    newLineBreak(),
     newOptionDiv([
       newOptionLabel([
         show_page_context_menu_item_input, //
@@ -34,7 +34,7 @@ async function init() {
   // Use Advanced Options Option
   const use_advanced_options_input = newCheckboxOptionInput(options.use_advanced_options);
   document.body.append(
-    document.createElement('br'),
+    newLineBreak(),
     newOptionDiv([
       newOptionLabel([
         use_advanced_options_input, //
@@ -57,16 +57,15 @@ async function init() {
   // Advanced Options //
   //                                                                        //
   advancedOptionsContainer.append(
-    document.createElement('br'),
+    newSectionBreak(),
     document.createTextNode('Advanced Options'), //
-    document.createElement('br'),
   );
 
   // Delay Range Option
   const advanced_delay_range_start_input = newNumberOptionInput(options.advanced_delay_range_start, 0);
   const advanced_delay_range_end_input = newNumberOptionInput(options.advanced_delay_range_end, 0);
   advancedOptionsContainer.append(
-    document.createElement('br'),
+    newLineBreak(),
     newOptionDiv([
       newOptionLabel([
         document.createTextNode('Delay between each tab reload, chosen randomly from range: '), //
@@ -87,7 +86,7 @@ async function init() {
   statusSpan.id = 'save-status';
 
   document.body.append(
-    document.createElement('br'),
+    newLineBreak(),
     saveButton, //
     document.createTextNode(' '),
     statusSpan,
@@ -173,6 +172,17 @@ function newCheckboxOptionInput(value) {
   input.type = 'checkbox';
   input.checked = value;
   return input;
+}
+
+function newLineBreak() {
+  const div = document.createElement('div');
+  div.classList.add('line-break');
+  return div;
+}
+function newSectionBreak() {
+  const div = document.createElement('div');
+  div.classList.add('section-break');
+  return div;
 }
 
 /** @param {HTMLInputElement} input */
