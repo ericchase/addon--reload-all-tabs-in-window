@@ -1,5 +1,8 @@
 import { loadOptions, options } from './options.lib.js';
 
+/** @type {Timer|undefined} */
+let save_blinking_interval = undefined;
+
 async function init() {
   await loadOptions();
   initContextMenus();
@@ -43,20 +46,24 @@ async function init() {
     ]),
   );
 
-  const advancedOptionsContainer = document.createElement('div');
-  function updateAdvancedOptionsContainer() {
-    if (options.use_advanced_options === true) {
-      advancedOptionsContainer.style.removeProperty('display');
+  const advanced_options_div = document.createElement('div');
+  /** @param {boolean} show */
+  function updateAdvancedOptionsContainer(show = options.use_advanced_options) {
+    if (show === true) {
+      advanced_options_div.style.removeProperty('display');
     } else {
-      advancedOptionsContainer.style.setProperty('display', 'none');
+      advanced_options_div.style.setProperty('display', 'none');
     }
   }
   updateAdvancedOptionsContainer();
-  document.body.append(advancedOptionsContainer);
+  document.body.append(advanced_options_div);
+  use_advanced_options_input.addEventListener('input', () => {
+    updateAdvancedOptionsContainer(use_advanced_options_input.checked);
+  });
 
   // Advanced Options //
   //                                                                        //
-  advancedOptionsContainer.append(
+  advanced_options_div.append(
     newSectionBreak(),
     document.createTextNode('Advanced Options'), //
   );
@@ -64,7 +71,7 @@ async function init() {
   // Delay Range Option
   const advanced_delay_range_start_input = newNumberOptionInput(options.advanced_delay_range_start, 0);
   const advanced_delay_range_end_input = newNumberOptionInput(options.advanced_delay_range_end, 0);
-  advancedOptionsContainer.append(
+  advanced_options_div.append(
     newLineBreak(),
     newOptionDiv([
       newOptionLabel([
@@ -81,7 +88,8 @@ async function init() {
 
   // Save Button and Status Indicator
   const saveButton = document.createElement('button');
-  saveButton.textContent = 'Save';
+  saveButton.toggleAttribute('disabled', true);
+  saveButton.textContent = 'Save Changes';
   const statusSpan = document.createElement('span');
   statusSpan.id = 'save-status';
 
@@ -94,7 +102,7 @@ async function init() {
 
   // Save Options
   const saveOptions = () => {
-    options.delay = Number.parseInt(delay_input.value) || 0;
+    options.delay = toInt(delay_input);
     options.show_page_context_menu_item = show_page_context_menu_item_input.checked;
     // advanced options
     options.use_advanced_options = use_advanced_options_input.checked;
@@ -116,6 +124,32 @@ async function init() {
   };
 
   saveButton.addEventListener('click', saveOptions);
+
+  function checkForChanges() {
+    clearInterval(save_blinking_interval);
+    if (
+      options.delay !== toInt(delay_input) || //
+      options.show_page_context_menu_item !== show_page_context_menu_item_input.checked ||
+      // advanced options
+      options.use_advanced_options !== use_advanced_options_input.checked ||
+      options.advanced_delay_range_start !== toInt(advanced_delay_range_start_input) ||
+      options.advanced_delay_range_end !== toInt(advanced_delay_range_end_input)
+    ) {
+      saveButton.toggleAttribute('disabled', false);
+      saveButton.classList.toggle('alt-color');
+      save_blinking_interval = setInterval(() => {
+        saveButton.classList.toggle('alt-color');
+      }, 500);
+    } else {
+      saveButton.toggleAttribute('disabled', true);
+      saveButton.classList.remove('alt-color');
+    }
+  }
+
+  saveButton.addEventListener('click', checkForChanges);
+  for (const input of document.querySelectorAll('input')) {
+    input.addEventListener('input', checkForChanges);
+  }
 }
 
 function initContextMenus() {
