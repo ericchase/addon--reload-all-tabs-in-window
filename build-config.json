@@ -1,7 +1,7 @@
 {
   "browsers": ["Chrome", "Firefox"],
   "paths": {
-    "/": ["LICENSE", "NOTICE"],
+    "/": ["LICENSE-APACHE", "NOTICE"],
     "src": [
       "icons/icon-16.png",
       "icons/icon-32.png",
